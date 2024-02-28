@@ -1,0 +1,170 @@
+                                         ASSIGNMENT 1
+                                         
+                                         DDL-CREATE
+                                        _____________
+
+
+create table EMPLOYEE(EMP_ID INT,NAME VARCHAR(20),CITY VARCHAR (20)NOT NULL,DOB DATE,ADHAR_NO INT);
+
+DESC EMPLOYEE;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMP_ID   | int         | YES  |     | NULL    |       |
+| NAME     | varchar(20) | YES  |     | NULL    |       |
+| CITY     | varchar(20) | NO   |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| ADHAR_NO | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+CREATE TABLE STUDENT(ROLL_NO INT  PRIMARY KEY,NAME VARCHAR(20) NOT NULL,AGE INT NOT NULL,ADDRESS VARCHAR(50),GENDER VARCHAR(6) DEFAULT
+'m',check (AGE<=99));
+
+DESC STUDENT;
+
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ROLL_NO | int         | NO   | PRI | NULL    |       |
+| NAME    | varchar(20) | NO   |     | NULL    |       |
+| AGE     | int         | NO   |     | NULL    |       |
+| ADDRESS | varchar(50) | YES  |     | NULL    |       |
+| GENDER  | varchar(6)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+
+
+
+CREATE TEMPORARY TABLE STUDENT1 SELECT * FROM STUDENT;
+DESC STUDENT1;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ROLL_NO | int         | NO   |     | NULL    | NULL  |
+| NAME    | varchar(20) | NO   |     | NULL    | NULL  |
+| AGE     | int         | NO   |     | NULL    | NULL  |
+| ADDRESS | varchar(50) | YES  |     | NULL    | NULL  |
+| GENDER  | varchar(6)  | YES  |     | m       | NULL  |
++---------+-------------+------+-----+---------+-------+
+
+
+
+CREATE TABLE EMP SELECT * FROM EMPLOYEE;
+DESC EMP;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMP_ID   | int         | YES  |     | NULL    |       |
+| NAME     | varchar(20) | YES  |     | NULL    |       |
+| CITY     | varchar(20) | NO   |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| ADHAR_NO | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+create table customer(id int primary key,name varchar(20),address varchar(25),city varchar(20),ph_no int);
+desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(25) | YES  |     | NULL    |       |
+| city    | varchar(20) | YES  |     | NULL    |       |
+| ph_no   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+
+create table product(pid int primary key,pname varchar(20),price int default 20);
+desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
+| price | int         | YES  |     | 20      |       |
++-------+-------------+------+-----+---------+-------+
+
+
+
+create table invoice_master(inv_id int primary key,cust_id int,inv_date date,foreign key(cust_id) references customer(id));
+desc invoice_master;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| inv_id   | int  | NO   | PRI | NULL    |       |
+| cust_id  | int  | YES  | MUL | NULL    |       |
+| inv_date | date | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+
+
+
+create table invoice_item(inv_id int,pid int,quantity int,foreign key(inv_id) references invoice_master(inv_id),foreign key(pid) references product(pid));
+desc invoice_item;
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| inv_id   | int  | YES  | MUL | NULL    |       |
+| pid      | int  | YES  | MUL | NULL    |       |
+| quantity | int  | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+
+
+
+                                       DDL-ALTER & DROP
+                                       __________________
+
+
+1. alter table EMPLOYEE add SSN int first;
+
+2. alter table EMPLOYEE modify dob year;
+
+3. alter table EMPLOYEE drop column emp_id;
+
+   desc EMPLOYEE;
+
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  |     | NULL    |       |
+| NAME     | varchar(20) | YES  |     | NULL    |       |
+| CITY     | varchar(20) | NO   |     | NULL    |       |
+| dob      | year        | YES  |     | NULL    |       |
+| ADHAR_NO | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+4. alter table EMPLOYEE add constraint unique key(SSN,ADHAR_NO);
+
+   desc EMPLOYEE;
+
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| SSN      | int         | YES  | MUL | NULL    |       |
+| NAME     | varchar(20) | YES  |     | NULL    |       |
+| CITY     | varchar(20) | NO   |     | NULL    |       |
+| dob      | year        | YES  |     | NULL    |       |
+| ADHAR_NO | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+5. alter table STUDENT modify age int null;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ROLL_NO | int         | NO   | PRI | NULL    |       |
+| NAME    | varchar(20) | NO   |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
+| ADDRESS | varchar(50) | YES  |     | NULL    |       |
+| GENDER  | varchar(6)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+
+
+6. alter table EMPLOYEE rename to PERSON;
+
+7.  drop table STUDENT1;
+
+
+
