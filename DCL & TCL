@@ -1,0 +1,211 @@
+   								DCL TCL
+							----------------------
+	
+
+mysql> create database mtm;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> create table persons(id int,name varchar (20),age int);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> insert into persons values(1,'anu',20);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into persons values(2,'abu',30);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into persons values(3,'aju',50);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> desc persons;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> set autocommit=off;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into persons values(6,'ammu',60);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into persons values(5,'akl',90);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from persons;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | anu  |   20 |
+|    2 | abu  |   30 |
+|    3 | aju  |   50 |
+|    6 | ammu |   60 |
+|    5 | akl  |   90 |
++------+------+------+
+5 rows in set (0.00 sec)
+
+
+mysql> delete from persons where id=1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from persons;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    2 | abu  |   30 |
+|    3 | aju  |   50 |
+|    6 | ammu |   60 |
+|    5 | akl  |   90 |
++------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from persons;
++------+------+------+
+| id   | name | age  |
++------+------+------+
+|    1 | anu  |   20 |
+|    2 | abu  |   30 |
+|    3 | aju  |   50 |
++------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into persons values(122,'fgdhy',90);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into persons values(666,'gyhuyg',50);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into persons values(896,'kkk',99);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from persons;
++------+--------+------+
+| id   | name   | age  |
++------+--------+------+
+|    1 | anu    |   20 |
+|    2 | abu    |   30 |
+|    3 | aju    |   50 |
+|  122 | fgdhy  |   90 |
+|  666 | gyhuyg |   50 |
+|  896 | kkk    |   99 |
++------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> rollback to s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from persons;
++------+-------+------+
+| id   | name  | age  |
++------+-------+------+
+|    1 | anu   |   20 |
+|    2 | abu   |   30 |
+|    3 | aju   |   50 |
+|  122 | fgdhy |   90 |
++------+-------+------+
+4 rows in set (0.00 sec)
+
+
+                                              GRAND
+                                            ----------
+                                            
+                                            
+                                            
+
+mysql> create user anju@'localhost' identified by 'mypass';
+Query OK, 0 rows affected (0.13 sec)
+
+
+mysql> create user raj@'localhost' identified by 'pass';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> grant all on customer to anju@'localhost';
+Query OK, 0 rows affected (0.06 sec)
+
+
+mysql> grant all on INVOICE.customer to anju@'localhost';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> show grants for anju@'localhost';
++--------------------------------------------------------------------+
+| Grants for anju@localhost                                          |
++--------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `anju`@`localhost`                           |
+| GRANT ALL PRIVILEGES ON `INVOICE`.`customer` TO `anju`@`localhost` |
+| GRANT ALL PRIVILEGES ON `anu`.`customer` TO `anju`@`localhost`     |
++--------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+
+
+                                       UPDATE & DELETE PRIVILAGE TO USER 2 ON ALL TABLES 
+                                       --------------------------------------------------
+                                       
+mysql> grant delete,update on INVOICE.customer to raj@'localhost';
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> show grants for raj@'localhost';
++-------------------------------------------------------------------+
+| Grants for raj@localhost                                          |
++-------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `raj`@`localhost`                           |
+| GRANT UPDATE, DELETE ON `INVOICE`.`customer` TO `raj`@`localhost` |
++-------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+
+         							REVOKE
+         						----------------------
+
+mysql> revoke delete on INVOICE.customer from raj@'localhost';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> show grants for raj@'localhost';
++-----------------------------------------------------------+
+| Grants for raj@localhost                                  |
++-----------------------------------------------------------+
+| GRANT USAGE ON *.* TO `raj`@`localhost`                   |
+| GRANT UPDATE ON `INVOICE`.`customer` TO `raj`@`localhost` |
++-----------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+							
+							
+							
+					
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+
