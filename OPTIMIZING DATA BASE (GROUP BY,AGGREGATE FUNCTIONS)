@@ -1,0 +1,77 @@
+                                        OPTIMIZING DATA BASE (GROUP BY,AGGREGATE FUNCTIONS)
+                                        ---------------------------------------------------
+                                        
+ mysql> select * from product;
++-----+-----------+-------+
+| pid | pname     | price |
++-----+-----------+-------+
+|   1 | pen       |   153 |
+|   2 | pencil    |    66 |
+|   3 | soap      |   102 |
+|   4 | note book |   122 |
+|   5 | marker    |    82 |
++-----+-----------+-------+
+5 rows in set (0.02 sec)
+
+mysql> select * from invoice_item;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    105 |    5 |       10 |
+|    101 |    1 |        3 |
+|    102 |    2 |        9 |
+|    103 |    3 |        8 |
+|    104 |    4 |        5 |
++--------+------+----------+
+5 rows in set (0.03 sec)
+
+mysql> select pname,price from product where pname !="soap" order by price;
++-----------+-------+
+| pname     | price |
++-----------+-------+
+| pencil    |    66 |
+| marker    |    82 |
+| note book |   122 |
+| pen       |   153 |
++-----------+-------+
+4 rows in set (0.00 sec)
+
+
+
+mysql> select min(price) as minimum,max(price) as maximum,avg(price) as average
+ from product;
++---------+---------+----------+
+| minimum | maximum | average  |
++---------+---------+----------+
+|      66 |     153 | 105.0000 |
++---------+---------+----------+
+1 row in set (0.02 sec)
+
+
+
+mysql> select * from customer;
++-------+---------+------------------+---------+-----------+
+| id    | name    | address          | city    | ph_no     |
++-------+---------+------------------+---------+-----------+
+| 10001 | Ram     | neelakam         | calicut |      NULL |
+| 10002 | syam    | sarovar          | tvm     |      NULL |
+| 10003 | rudra   | sreelakam        | ekm     |      NULL |
+| 10004 | aswathi | thirumanasseri   | tvm     | 792358146 |
+| 10005 | anuzz   | eeshwara nilayam | tvm     | 854596321 |
++-------+---------+------------------+---------+-----------+
+5 rows in set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
