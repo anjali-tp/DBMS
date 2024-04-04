@@ -1,0 +1,191 @@
+                                                             PL SQL PROGRAMS-stored procedures
+                                                          --------------------------------------
+
+
+
+mysql> delimiter //
+
+mysql> create procedure cust_tab() begin select * from customer; select * from invoice_master; select * from invoice_item; end//
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> call cust_tab()//
++-------+---------+------------------+---------+-----------+
+| id    | name    | address          | city    | ph_no     |
++-------+---------+------------------+---------+-----------+
+| 10001 | Ram     | neelakam         | calicut |      NULL |
+| 10002 | syam    | sarovar          | tvm     |      NULL |
+| 10003 | rudra   | sreelakam        | ekm     |      NULL |
+| 10004 | aswathi | thirumanasseri   | tvm     | 792358146 |
+| 10005 | anuzz   | eeshwara nilayam | tvm     | 854596321 |
++-------+---------+------------------+---------+-----------+
+5 rows in set (0.04 sec)
+
++--------+---------+------------+
+| inv_id | cust_id | inv_date   |
++--------+---------+------------+
+|    101 |   10001 | 2024-02-12 |
+|    102 |   10001 | 2023-03-22 |
+|    103 |   10002 | 2022-03-29 |
+|    104 |   10003 | 2021-06-25 |
+|    105 |   10003 | 2028-03-22 |
++--------+---------+------------+
+5 rows in set (0.05 sec)
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|    105 |    5 |       10 |
+|    101 |    1 |        3 |
+|    102 |    2 |        9 |
+|    103 |    3 |        8 |
+|    104 |    4 |        5 |
++--------+------+----------+
+5 rows in set (0.05 sec)
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> 
+
+
+
+                                                           PL SQL- FUNCTIONS
+                                                          -------------------
+                                                          
+                                                          
+mysql> delimiter //
+
+mysql> create function priceint(price int)returns varchar(20)
+    -> deterministic
+    -> begin
+    -> declare price_ind varchar(20);
+    -> if price<=35 then set price_ind='low';
+    -> elseif(price>35 and price<=200)then set price_ind='medium';
+    -> elseif price>200 then set price_ind='high';
+    -> end if;
+    -> return(price_ind);
+    -> end
+    -> //
+Query OK, 0 rows affected (0.09 sec)
+                                               
+                                               
+mysql> select pid,pname,price,priceint(price)from product; //
++-----+-----------+-------+-----------------+
+| pid | pname     | price | priceint(price) |
++-----+-----------+-------+-----------------+
+|   1 | pen       |   153 | medium          |
+|   2 | pencil    |    66 | medium          |
+|   3 | soap      |   102 | medium          |
+|   4 | note book |   122 | medium          |
+|   5 | marker    |    82 | medium          |
++-----+-----------+-------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+
+                                                                  PL SQL - TRIGGERS
+                                                               -----------------------
+                                                               
+
+mysql> create temporary table cust(select * from customer);
+    -> //
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from cust//
++-------+---------+------------------+---------+-----------+
+| id    | name    | address          | city    | ph_no     |
++-------+---------+------------------+---------+-----------+
+| 10001 | Ram     | neelakam         | calicut |      NULL |
+| 10002 | syam    | sarovar          | tvm     |      NULL |
+| 10003 | rudra   | sreelakam        | ekm     |      NULL |
+| 10004 | aswathi | thirumanasseri   | tvm     | 792358146 |
+| 10005 | anuzz   | eeshwara nilayam | tvm     | 854596321 |
++-------+---------+------------------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> truncate cust//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from cust//
+Empty set (0.00 sec)
+                    
+                    
+                                                                    
+
+mysql> update customer set city="idukki" where id=10001;
+    -> //
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+
+mysql> update customer set ph_no=854596343 where id=10005;
+    -> //
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> select * from cust//
++-------+-------+------------------+--------+-----------+
+| id    | name  | address          | city   | ph_no     |
++-------+-------+------------------+--------+-----------+
+| 10001 | Ram   | neelakam         | idukki |      NULL |
+| 10005 | anuzz | eeshwara nilayam | tvm    | 854596343 |
++-------+-------+------------------+--------+-----------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+2]
+
+mysql> create trigger trig_relation before insert on product for each row begin
+if new.price<5 then set new.price=10; end if; end; //
+Query OK, 0 rows affected (0.12 sec)
+
+
+mysql> insert into product values(8,'eraser',3)//
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from product//
++-----+-----------+-------+
+| pid | pname     | price |
++-----+-----------+-------+
+|   1 | pen       |   153 |
+|   2 | pencil    |    66 |
+|   3 | soap      |   102 |
+|   4 | note book |   122 |
+|   5 | marker    |    82 |
+|   8 | eraser    |    10 |
++-----+-----------+-------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
