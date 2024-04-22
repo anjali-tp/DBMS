@@ -133,3 +133,4 @@ mysql> select pname from product where pid in(select pid from invoice_item where
 | matchbox max |
 +--------------+
 5 rows in set (0.01 sec)
+//VERIFIED
