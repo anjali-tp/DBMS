@@ -95,6 +95,6 @@ invoice> db.CUSTOMER.aggregate([{$group:{_id:"$city",max_age:{$max:"$age"},min_a
   { _id: 'manjeri', max_age: null, min_age: null },
   { _id: 'tvm', max_age: '55', min_age: 55 }
 ]
-
+//VERIFIED
 
 
